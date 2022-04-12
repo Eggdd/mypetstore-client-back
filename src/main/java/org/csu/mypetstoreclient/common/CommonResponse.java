@@ -1,10 +1,13 @@
 package org.csu.mypetstoreclient.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 import java.io.Serializable;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)   // json返回时只返回非空的数据
 public class CommonResponse<T> implements Serializable {
     private int status;
     private String msg;
@@ -30,6 +33,7 @@ public class CommonResponse<T> implements Serializable {
         this.data = data;
     }
 
+    @JsonIgnore
     public boolean isSuccess(){
         return this.status == ResponseCode.SUCCESS.getCode();
     }
@@ -43,7 +47,7 @@ public class CommonResponse<T> implements Serializable {
     public static <T> CommonResponse<T> createForSuccessMessage(String msg){
         return new CommonResponse<T>(ResponseCode.SUCCESS.getCode(), msg);
     }
-    public static <T> CommonResponse<T> createForSuccessMessage(String msg, T data){
+    public static <T> CommonResponse<T> createForSuccess(String msg, T data){
         return new CommonResponse<T>(ResponseCode.SUCCESS.getCode(), msg, data);
     }
 

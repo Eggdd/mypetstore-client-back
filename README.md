@@ -31,7 +31,7 @@
                  {
                      "categoryId": "DOGS",
                      "name": "Dogs",
-                     "description":"<image src=\"../images/dogs_icon.gif\"><font                      size=\"5\" color=\"blue\"> Dogs</font>"
+                     "description":"<image src=\"../images/dogs_icon.gif\"><font size=\"5\" color=\"blue\"> Dogs</font>"
                  },
                  {...},
                  ...
@@ -66,7 +66,7 @@
             "data":  {
                    "categoryId": "DOGS",
                     "name": "Dogs",
-                    "description":"<image src=\"../images/dogs_icon.gif\"><font                      size=\"5\" color=\"blue\"> Dogs</font>"
+                    "description":"<image src=\"../images/dogs_icon.gif\"><font size=\"5\" color=\"blue\"> Dogs</font>"
              }     
          }
    ```
@@ -100,7 +100,7 @@
                    "productId": "K9-RT-01",
                    "categoryId": "DOGS",
                    "name": "Golden Retriever",
-                   "description": "<image src=\"images/dog1.gif\">Great family                        dog"                  
+                   "description": "<image src=\"images/dog1.gif\">Great family dog"                  
                 },
                 {...},
                 ...
@@ -137,7 +137,7 @@
                    "productId": "K9-RT-01",
                    "categoryId": "DOGS",
                    "name": "Golden Retriever",
-                   "description": "<image src=\"images/dog1.gif\">Great family                        dog"                  
+                   "description": "<image src=\"images/dog1.gif\">Great family dog"                  
                 },
                 {...},
                 ...
@@ -174,7 +174,7 @@
                    "productId": "K9-RT-01",
                    "categoryId": "DOGS",
                    "name": "Golden Retriever",
-                   "description": "<image src=\"images/dog1.gif\">Great family                        dog"                  
+                   "description": "<image src=\"images/dog1.gif\">Great family dog"                  
                 },
                 {...},
                 ...
@@ -210,7 +210,7 @@
                    "productId": "K9-RT-01",
                    "categoryId": "DOGS",
                    "name": "Golden Retriever",
-                   "description": "<image src=\"images/dog1.gif\">Great family                        dog"                  
+                   "description": "<image src=\"images/dog1.gif\">Great family dog"                  
             }
          }  
    ```
@@ -257,7 +257,7 @@
                         "productId": "K9-RT-01",
                         "categoryId": "DOGS",
                         "name": "Golden Retriever",
-                        "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                        "description": "<image src=\"images/dog1.gif\">Great family dog" 
                     }   
                 },
                 {...},
@@ -307,7 +307,7 @@
                     "productId": "K9-RT-01",
                     "categoryId": "DOGS",
                     "name": "Golden Retriever",
-                    "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                    "description": "<image src=\"images/dog1.gif\">Great family dog" 
                 }   
             }  
          }  
@@ -578,7 +578,7 @@
                         "productId": "K9-RT-01",
                         "categoryId": "DOGS",
                         "name": "Golden Retriever",
-                        "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                        "description": "<image src=\"images/dog1.gif\">Great family dog" 
                     },        // 也就是一个item对象
                     "quantity": 1,   // 这个quantity是指购物车中该商品的数量
                     "inStock": true,
