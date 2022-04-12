@@ -17,17 +17,15 @@
 
    ​        fail:
 
-           ```
          {
             "status": 1,
             "msg": "获取失败"
          }
-           ```
-
+   
    ​        success:
 
    ```
-         {
+      {
             "status": 0,
             "data": [
                  {
@@ -40,7 +38,7 @@
             ]
          }
    ```
-
+   
 2.  根据id获得单个category类信息
 
    method: get
@@ -243,7 +241,7 @@
             "status": 0,
             "data": [
                 {
-                    "itemId": "EST-28",
+                    "itemId": "EST-28", 
                     "productId": "K9-RT-01",
                     "listPrice": "155.29",
                     "unitCost": "90.00",
@@ -254,25 +252,25 @@
                     "attribute3": "",
                     "attribute4": "",
                     "attribute5": "",
-                    "product":{
+                    "quantity": "10000",
+                    "product": {
                         "productId": "K9-RT-01",
                         "categoryId": "DOGS",
                         "name": "Golden Retriever",
-                        "description": "<image src=\"images/dog1.gif\">Great                              family dog"          
-                    },
-                    "quantity": "10000"
+                        "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                    }   
                 },
                 {...},
                 ...
             ]
          }  
    ```
-
+   
 8.  根据id获得单个item
 
    method: get
 
-   url:/catalog/items/{id}   如/catalog/K9-RT-01
+   url:/catalog/items/{id}   如/catalog/items/K9-RT-01
 
    parameters: 无
 
@@ -293,7 +291,7 @@
          {
             "status": 0,
             "data": {
-                "itemId": "EST-28",
+                "itemId": "EST-28", 
                 "productId": "K9-RT-01",
                 "listPrice": "155.29",
                 "unitCost": "90.00",
@@ -304,13 +302,13 @@
                 "attribute3": "",
                 "attribute4": "",
                 "attribute5": "",
-                "product":{
+                "quantity": "10000",
+                "product": {
                     "productId": "K9-RT-01",
                     "categoryId": "DOGS",
                     "name": "Golden Retriever",
-                    "description": "<image src=\"images/dog1.gif\">Great                              family dog"          
-                },
-                "quantity": "10000"
+                    "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                }   
             }  
          }  
    ```
@@ -321,7 +319,7 @@
 
       method: post
 
-      url: /account/loginByUsername
+      url: /accounts/loginByUsername
 
       parameters: username, password
 
@@ -369,7 +367,7 @@
 
       method: post
 
-      url: /account/loginByPhone
+      url: /accounts/loginByPhone
 
       parameters: phone, password
 
@@ -417,7 +415,7 @@
 
       method: post
 
-      url: /account/register
+      url: /accounts/register
 
       parameters: 
 
@@ -475,4 +473,387 @@
 
 #### 三、购物车模块
 
+1.  添加商品到购物车（每次添加一个）
+
+   method: post
+
+   url: /accounts/{username}/carts/{itemId}
+
+   parameters:  无
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "添加失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "msg": "添加成功！"
+         }
+   ```
+
+2.  更新购物车
+
+   method: put
+
+   url: /accounts/{username}/carts
+
+   parameters: 
+
+   ```
+      {
+          "itemId": "",
+          "quantity": ""
+      }
+   ```
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "更新失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "msg": "添加成功！"
+         }
+   ```
+
+3.  获得某个账号下的所有购物车
+
+   method: get
+
+   url: accounts/{username}/carts
+
+   parameters:  无
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "获得失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "data": [
+                {
+                    "itemId": "EST-28", 
+                    "productId": "K9-RT-01",
+                    "listPrice": "155.29",
+                    "unitCost": "90.00",
+                    "supplierId": "1",
+                    "status": "P",
+                    "attribute1": "Adult Female",
+                    "attribute2": "",
+                    "attribute3": "",
+                    "attribute4": "",
+                    "attribute5": "",
+                    "quantity": "10000",
+                    "product": {
+                        "productId": "K9-RT-01",
+                        "categoryId": "DOGS",
+                        "name": "Golden Retriever",
+                        "description": "<image src=\"images/dog1.gif\">Great                               family dog" 
+                    },        // 也就是一个item对象
+                    "quantity": 1,   // 这个quantity是指购物车中该商品的数量
+                    "inStock": true,
+                    "total": 155.29    // 单价*数量
+                },
+                {...},
+                ...
+            ]
+         }
+   ```
+
+4.  移除购物车的某项
+
+   method: delete
+
+   url: accounts/{username}/carts/{itemId}
+
+   parameters:  无
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "删除失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "msg": "删除成功！"
+         }
+   ```
+
 #### 四、 订单模块 
+
+1.  增加订单
+
+   method: post
+
+   url: /orders
+
+   parameters: 
+
+   ```
+      {
+          "username": "luotian",
+          "orderDate": "2022-01-12",
+          "shipAddress1": "CSU",
+          "shipAddress2": "CSE",
+          "shipCity": "changsha",
+          "shipState": "11",
+          "shipZip": "abc",
+          "shipCountry": "China",
+          "billAddress1": "CSU",
+          "billAddress2": "USC",
+          "billCity": "abb",
+          "billState": "abbb",
+          "billZip": "www",
+          "billCountry": "China",
+          "courier": "aaaa",
+          "totalPrice": 250.00,
+          "billToFirstName": "luo",
+          "billToLastName": "tian",
+          "shipToFirstName": "luo",
+          "shipToLastName": "tian",
+          "creditCard": "888 888 888",
+          "expiryDate": "12/03",
+          "cardType": "Visa",
+          "locale": "CA",
+          "lineItems": [
+               {
+                   "itemId": "EST-1",
+                   "quantity": "2"
+               },
+               {...},
+               ...
+          ]
+      }
+   ```
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "添加失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "msg": "添加成功！"
+         }
+   ```
+
+2. 根据订单id获得订单
+
+   method: get
+
+   url: /orders/{id}
+
+   parameters:  无
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "获取失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "data": {
+                “orderId": 1006,
+                "username": "luotian",
+                "orderDate": "2022-01-12",
+                "shipAddress1": "CSU",
+                "shipAddress2": "CSE",
+                "shipCity": "changsha",
+                "shipState": "11",
+                "shipZip": "abc",
+                "shipCountry": "China",
+                "billAddress1": "CSU",
+                "billAddress2": "USC",
+                "billCity": "abb",
+                "billState": "abbb",
+                "billZip": "www",
+                "billCountry": "China",
+                "courier": "aaaa",
+                "totalPrice": 250.00,
+                "billToFirstName": "luo",
+                "billToLastName": "tian",
+                "shipToFirstName": "luo",
+                "shipToLastName": "tian",
+                "creditCard": "888 888 888",
+                "expiryDate": "12/03",
+                "cardType": "Visa",
+                "locale": "CA",
+                "lineItems": [
+                    {
+                        "orderId": 1006,
+                        "lineNumber": 1002,   // 上面这两项对于前端没有用，忽略
+                        "itemId": "EST-1",
+                        "quantity": "2",
+                        "unitPrice": 16.5   // item的listPrice
+                        "total": 33      // quantity*unitPrice
+                        "item": {
+                            "itemId": "EST-28", 
+                            "productId": "K9-RT-01",
+                            "listPrice": "155.29",
+                            "unitCost": "90.00",
+                            "supplierId": "1",
+                            "status": "P",
+                            "attribute1": "Adult Female",
+                            "attribute2": "",
+                            "attribute3": "",
+                            "attribute4": "",
+                            "attribute5": "",
+                            "quantity": "10000",
+                            "product": {
+                                "productId": "K9-RT-01",
+                                "categoryId": "DOGS",
+                                "name": "Golden Retriever",
+                                "description": "<image src=\"images/dog1.gif\"> Great family dog"           
+                           }
+                        }   // 一个item对象
+                    }      // 一个lineItem对象 
+            }   // 一个order对象
+         }
+   ```
+
+3. 查询某个用户的所有订单
+
+   method: get
+
+   url: /accounts/{username}/orders
+
+   parameters:  无
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "获取失败"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "data": [
+                { 
+                    “orderId": 1006,
+                    "username": "luotian",
+                    "orderDate": "2022-01-12",
+                    "shipAddress1": "CSU",
+                    "shipAddress2": "CSE",
+                    "shipCity": "changsha",
+                    "shipState": "11",
+                    "shipZip": "abc",
+                    "shipCountry": "China",
+                    "billAddress1": "CSU",
+                    "billAddress2": "USC",
+                    "billCity": "abb",
+                    "billState": "abbb",
+                    "billZip": "www",
+                    "billCountry": "China",
+                    "courier": "aaaa",
+                    "totalPrice": 250.00,
+                    "billToFirstName": "luo",
+                    "billToLastName": "tian",
+                    "shipToFirstName": "luo",
+                    "shipToLastName": "tian",
+                    "creditCard": "888 888 888",
+                    "expiryDate": "12/03",
+                    "cardType": "Visa",
+                    "locale": "CA",
+                    "lineItems": [
+                        {
+                            "orderId": 1006,
+                            "lineNumber": 1002,   // 上面这两项对于前端没有用，忽略
+                            "itemId": "EST-1",
+                            "quantity": "2",
+                            "unitPrice": 16.5   // item的listPrice
+                            "total": 33      // quantity*unitPrice
+                            "item": {
+                                "itemId": "EST-28", 
+                                "productId": "K9-RT-01",
+                                "listPrice": "155.29",
+                                "unitCost": "90.00",
+                                "supplierId": "1",
+                                "status": "P",
+                                "attribute1": "Adult Female",
+                                "attribute2": "",
+                                "attribute3": "",
+                                "attribute4": "",
+                                "attribute5": "",
+                                "quantity": "10000",
+                                "product": {
+                                    "productId": "K9-RT-01",
+                                    "categoryId": "DOGS",
+                                    "name": "Golden Retriever",
+                                    "description": "<image src=\"images/dog1.gif\"> Great family dog"           
+                               }
+                            }   // 一个item对象
+                        },      // 一个lineItem对象 
+                        {...},
+                        ...
+                    ]    // lineItem数组
+                },   // 一个order对象
+                {...},
+                ...
+            ]    // 一个order对象数组
+         }
+   ```
