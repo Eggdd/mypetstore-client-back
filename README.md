@@ -421,12 +421,12 @@
 
        ```
          {
-             "username": "luotian123",
-             "password": "1233456",
+             "username": "luotian123",    // 要求非空
+             "password": "1233456",       // 非空
              "firstName": "luo",
              "lastName": "tian",
              "email": "2757334535@qq.com",
-             "phone": "18607951748",
+             "phone": "18607951748",     // 要求非空且不重复
              "address1": "CSU",
              "address2": "CSE",
              "city": "",
