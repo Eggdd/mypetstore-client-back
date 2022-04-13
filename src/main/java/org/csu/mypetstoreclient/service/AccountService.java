@@ -14,5 +14,13 @@ public interface AccountService {
 
     CommonResponse<AccountVO> insertAccount(AccountVO accountVO);
 
+    CommonResponse<AccountVO> getAccountByPhone(String phone);
 
+    CommonResponse<Integer> sendMsgToPhone(String phone);
+
+    CommonResponse modifyPwdByPhone(String phone, String password);
+
+    CommonResponse updateAccount(AccountVO accountVO);
+
+    CommonResponse changePhone(String username, String phone);
 }
