@@ -6,7 +6,7 @@ import org.csu.mypetstoreclient.vo.AccountVO;
 
 public interface AccountService {
 
-    CommonResponse<AccountVO> getAccountByPhone(String phone, String password);
+    CommonResponse<AccountVO> getAccountByPhoneAndPassword(String phone, String password);
 
     CommonResponse<AccountVO>  getAccountByUsername(String username);
 

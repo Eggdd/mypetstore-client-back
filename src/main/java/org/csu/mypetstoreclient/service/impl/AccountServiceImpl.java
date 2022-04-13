@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public CommonResponse<AccountVO> getAccountByPhone(String phone, String password) {
+    public CommonResponse<AccountVO> getAccountByPhoneAndPassword(String phone, String password) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("phone" , phone);
         QueryWrapper<SignOn> queryWrapper1 = new QueryWrapper<>();
