@@ -341,35 +341,35 @@
                "status": 0,
                "msg": "登陆成功",
                "data":{
-                   "username": "",
-                   "password": "",
-                   "emial": "",
-                   "firstName": "",
-                   "lastName": "",
-                   "status": "",
-                   "address1": "",
-                   "address2": "",
-                   "city": "",
-                   "state": "",
-                   "zip": "",
-                   "country": "",
-                   "phone": "",
-                   "favouriteCategoryId": "",
-                   "languagePreference": "",
-                   "listOption": "",
-                   "bannerOption": "",
-                   "bannerName": ""
+                   "username": "111",
+                   "password": "",    // 密码屏蔽掉了 不给前端
+                   "emial": "111",
+                   "firstName": "a",
+                   "lastName": "a",
+                   "status": "aa",
+                   "address1": "aa",
+                   "address2": "a",
+                   "city": "a",
+                   "state": "a",
+                   "zip": "a",
+                   "country": "a",
+                   "phone": "a",
+                   "favouriteCategoryId": "a",
+                   "languagePreference": "a",
+                   "listOption": "true",
+                   "bannerOption": "true",
+                   "bannerName": "xxxxxx"
                }
             }
       ```
 
-   2.  手机号和密码登陆
+   2.  手机号和验证码登陆 （要求前端自行调用方法发送验证码和判断验证码正确性，参考第5条）
 
       method: post
 
       url: /accounts/loginByPhone
 
-      parameters: phone, password
+      parameters: phone
 
       response:
 
@@ -389,24 +389,24 @@
                "status": 0,
                "msg": "登陆成功",
                "data":{
-                   "username": "",
-                   "password": "",
-                   "emial": "",
-                   "firstName": "",
-                   "lastName": "",
-                   "status": "",
-                   "address1": "",
-                   "address2": "",
-                   "city": "",
-                   "state": "",
-                   "zip": "",
-                   "country": "",
-                   "phone": "",
-                   "favouriteCategoryId": "",
-                   "languagePreference": "",
-                   "listOption": "",
-                   "bannerOption": "",
-                   "bannerName": ""
+                   "username": "1",
+                   "password": "",  // 屏蔽掉了
+                   "emial": "1",
+                   "firstName": "1",
+                   "lastName": "1",
+                   "status": "1",
+                   "address1": "1",
+                   "address2": "1",
+                   "city": "1",
+                   "state": "1",
+                   "zip": "1",
+                   "country": "1",
+                   "phone": "18607951748",
+                   "favouriteCategoryId": "1",
+                   "languagePreference": "1",
+                   "listOption": "true",
+                   "bannerOption": "true",
+                   "bannerName": "1"
                }
             }
       ```
@@ -465,7 +465,7 @@
 
       method: get
 
-      url: /accounts/{username}
+      url: /accounts/{username}  如 /accounts/j2ee
 
       parameters:  无
 
@@ -487,7 +487,7 @@
                "status": 0,
                "data": {
                    "username": "luotian123",
-                   "password": "1233456",
+                   "password": "",   // 屏蔽
                    "firstName": "luo",
                    "lastName": "tian",
                    "email": "2757334535@qq.com",
@@ -533,7 +533,7 @@
                "status": 0,
                "data": {
                    "username": "luotian123",
-                   "password": "1233456",
+                   "password": "",   // 屏蔽
                    "firstName": "luo",
                    "lastName": "tian",
                    "email": "2757334535@qq.com",
@@ -577,13 +577,11 @@
       ```
             {
                "status": 0,
-               "data": {
-                   "vertificationCode": "1234"
-               }
+               "data": "1234"
             }
       ```
 
-   7. 根据电话号码修改密码（需要发送验证码且验证码正确）
+   7. 根据电话号码修改密码（需要发送验证码且验证码正确 由前端保证）
 
       method: post
 
@@ -622,7 +620,7 @@
       ```
           {
               "username": "j2ee",
-              "password": "j2ee",
+              "password": "",      // 这个在这个方法也是不可以修改 不用传
               "emial": "123@qq.com",
               "firstName": "john",
               "lastName": "xxx",
@@ -632,7 +630,7 @@
               "state": "sss",
               "zip": "ss",
               "country": "China",
-              "phone": "18607951748",
+              "phone": "18607951748",    // 不可更改，但是还是把原来的传过来
               "favouriteCategoryId": "BIRDS",
               "languagePreference": "Chinese",
               "listOption": "true",
@@ -659,6 +657,36 @@
                "msg": "更改失败"
             }
       ```
+
+9.  更换绑定的电话号码  更换之前需要客户端向新电话号码发送验证码并验证
+
+   method: put
+
+   url: /accounts/{username}/changePhone
+
+   parameters:    phone
+
+   response:
+
+   ​        fail:
+
+   ```
+         {
+            "status": 1,
+            "msg": "更改成功"
+         }
+   ```
+
+   ​       success:
+
+   ```
+         {
+            "status": 0,
+            "msg": "更改失败"
+         }
+   ```
+
+10. 
 
 #### 三、购物车模块
 
