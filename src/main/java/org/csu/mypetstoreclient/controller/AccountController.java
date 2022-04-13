@@ -43,7 +43,7 @@ public class AccountController {
             @RequestParam String phone,
             @RequestParam String passwprd,
             HttpSession session){
-        CommonResponse<AccountVO> response = accountService.getAccountByPhone(phone, passwprd);
+        CommonResponse<AccountVO> response = accountService.getAccountByPhoneAndPassword(phone, passwprd);
         if(response.isSuccess()){
             session.setAttribute("loginByPhone_account",response.getData());
         }
