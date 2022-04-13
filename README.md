@@ -149,7 +149,7 @@
 
    method: get
 
-   url:/catalog/products
+   url:/catalog/products/keywards
 
    parameters:    keywords
 
@@ -437,7 +437,7 @@
              "favouriteCategoryId": "",
              "languagePreference": "",
              "listOption": "",
-             "bannerOption": "",
+             "bannerOption": ""
          }
        ```
 
@@ -461,15 +461,204 @@
             }
       ```
 
-   4.  根据用户id获得用户账号
+   4. 根据用户id获得用户账号 (用来注册的时候判断用户名是否已注册)
 
-   5.  根据电话获得用户账号
+      method: get
 
-   6.  向电话号码发送验证码
+      url: /accounts/{username}
 
-   7.  根据电话号码修改密码
+      parameters:  无
 
-   8.  登陆之后在个人信息模块更新账户信息 电话号码不可修改
+      response:
+
+      ​        fail:
+
+      ```
+            {
+               "status": 1,
+               "msg": "用户不存在！"
+            }
+      ```
+
+      ​       success:
+
+      ```
+            {
+               "status": 0,
+               "data": {
+                   "username": "luotian123",
+                   "password": "1233456",
+                   "firstName": "luo",
+                   "lastName": "tian",
+                   "email": "2757334535@qq.com",
+                   "phone": "18607951748",
+                   "address1": "CSU",
+                   "address2": "CSE",
+                   "city": "",
+                   "state": "",
+                   "zip": "",
+                   "country": "",
+                   "phone": "",
+                   "favouriteCategoryId": "",
+                   "languagePreference": "",
+                   "listOption": "",
+                   "bannerOption": "",
+               }
+            }
+      ```
+
+   5. 根据电话获得用户账号 （用来注册的时候判断手机号是否已经被注册）
+
+      method: get
+
+      url: /accounts/phones
+
+      parameters:  phone
+
+      response:
+
+      ​        fail:
+
+      ```
+            {
+               "status": 1,
+               "msg": "用户不存在！"
+            }
+      ```
+
+      ​       success:
+
+      ```
+            {
+               "status": 0,
+               "data": {
+                   "username": "luotian123",
+                   "password": "1233456",
+                   "firstName": "luo",
+                   "lastName": "tian",
+                   "email": "2757334535@qq.com",
+                   "phone": "18607951748",
+                   "address1": "CSU",
+                   "address2": "CSE",
+                   "city": "",
+                   "state": "",
+                   "zip": "",
+                   "country": "",
+                   "phone": "",
+                   "favouriteCategoryId": "",
+                   "languagePreference": "",
+                   "listOption": "",
+                   "bannerOption": "",
+               }
+            }
+      ```
+
+   6. 向电话号码发送验证码(后端向电话号码发送验证码，并把验证码发回给前端验证)
+
+      method: post
+
+      url: /accounts/sendMsg
+
+      parameters:  phone
+
+      response:
+
+      ​        fail:
+
+      ```
+            {
+               "status": 1,
+               "msg": "发送失败！电话号码不存在"
+            }
+      ```
+
+      ​       success:
+
+      ```
+            {
+               "status": 0,
+               "data": {
+                   "vertificationCode": "1234"
+               }
+            }
+      ```
+
+   7. 根据电话号码修改密码（需要发送验证码且验证码正确）
+
+      method: post
+
+      url: /accounts/modifyPassword
+
+      parameters:  phone, password
+
+      response:
+
+      ​        fail:
+
+      ```
+            {
+               "status": 1,
+               "msg": "更改失败"
+            }
+      ```
+
+      ​       success:
+
+      ```
+            {
+               "status": 0,
+               "msg": "修改成功"
+            }
+      ```
+
+   8. 登陆之后在个人信息模块更新账户信息 电话号码不可修改
+
+      method: put
+
+      url: /accounts/{username}
+
+      parameters: 
+
+      ```
+          {
+              "username": "j2ee",
+              "password": "j2ee",
+              "emial": "123@qq.com",
+              "firstName": "john",
+              "lastName": "xxx",
+              "address1": "csu",
+              "address2": "cse",
+              "city": "changsha",
+              "state": "sss",
+              "zip": "ss",
+              "country": "China",
+              "phone": "18607951748",
+              "favouriteCategoryId": "BIRDS",
+              "languagePreference": "Chinese",
+              "listOption": "true",
+              "bannerOption": "true"
+          }
+      ```
+
+      response:
+
+      ​        fail:
+
+      ```
+            {
+               "status": 1,
+               "msg": "更改成功"
+            }
+      ```
+
+      ​       success:
+
+      ```
+            {
+               "status": 0,
+               "msg": "更改失败"
+            }
+      ```
 
 #### 三、购物车模块
 
@@ -857,3 +1046,4 @@
             ]    // 一个order对象数组
          }
    ```
+

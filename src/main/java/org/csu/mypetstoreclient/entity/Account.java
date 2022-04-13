@@ -13,7 +13,6 @@ public class Account {
     @TableId(value = "userid", type = IdType.INPUT)
     private String username;
 
-    private String password;
     private String email;
 
     @TableField(value = "firstname")

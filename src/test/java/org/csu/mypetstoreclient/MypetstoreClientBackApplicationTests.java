@@ -16,8 +16,11 @@ class MypetstoreClientBackApplicationTests {
 
     @Test
     void contextLoads() {
-        List<Category> categoryList = categoryMapper.selectList(null);
-        System.out.println(categoryList);
+//        List<Category> categoryList = categoryMapper.selectList(null);
+//        System.out.println(categoryList);
+        int a = 1;
+
+
     }
 
 }
