@@ -125,8 +125,8 @@ public class CatalogServiceImpl implements CatalogService {
 
     private ItemVO itemToItemVO(Item item,Product product){
         ItemVO itemVO = new ItemVO();
-        itemVO.setItem(item);
-        /*itemVO.setItemId(item.getItemId());
+
+        itemVO.setItemId(item.getItemId());
         itemVO.setProductId(item.getProductId());
         itemVO.setListPrice(item.getListPrice());
         itemVO.setUnitCost(item.getUnitCost());
@@ -136,7 +136,7 @@ public class CatalogServiceImpl implements CatalogService {
         itemVO.setAttribute2(item.getAttribute2());
         itemVO.setAttribute3(item.getAttribute3());
         itemVO.setAttribute4(item.getAttribute4());
-*/
+
         itemVO.setProduct(product);
         /*itemVO.setCategoryId(product.getCategoryId());
         itemVO.setName(product.getName());

@@ -4,10 +4,11 @@ import lombok.Data;
 import org.csu.mypetstoreclient.entity.Item;
 import org.csu.mypetstoreclient.entity.Product;
 
+import java.math.BigDecimal;
+
 @Data
 public class ItemVO {
-    private Item item;
-    /*//item表中数据
+    //item表中数据
     private String itemId;
     private String productId;
     private BigDecimal listPrice;
@@ -18,7 +19,7 @@ public class ItemVO {
     private String attribute2;
     private String attribute3;
     private String attribute4;
-    private String attribute5;*/
+    private String attribute5;
 
     private Product product;
     /*//item所属product的属性
