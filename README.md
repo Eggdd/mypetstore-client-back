@@ -724,33 +724,26 @@
 
    url: /accounts/{username}/carts
 
-   parameters: 
+   parameters: itemId(如  "EST-1"),   quantity(如  8)
 
+   response:
+   
+   ​        fail:
+   
    ```
-      {
-          "itemId": "",
-          "quantity": ""
+         {
+         "status": 1,
+            "msg": "更新失败"
       }
    ```
 
-   response:
-
-   ​        fail:
-
-   ```
-         {
-            "status": 1,
-            "msg": "更新失败"
-         }
-   ```
-
    ​       success:
-
+   
    ```
          {
             "status": 0,
             "msg": "添加成功！"
-         }
+      }
    ```
 
 3.  获得某个账号下的所有购物车

@@ -29,7 +29,7 @@ public class AccountController {
             HttpSession session) {
         CommonResponse<AccountVO> response = accountService.getAccountByUsernameAndPassword(username, passwprd);
         if (response.isSuccess()) {
-            session.setAttribute("loginByUsername_account", response.getData());
+            session.setAttribute("account", response.getData());
         }
         return response;
     }
@@ -41,6 +41,7 @@ public class AccountController {
             HttpSession session) {
         CommonResponse<AccountVO> response = accountService.getAccountByPhone(phone);
         if (response.isSuccess()) {
+            session.setAttribute("account", response.getData());
             return CommonResponse.createForSuccess("登陆成功", response.getData());
         } else {
             return  CommonResponse.createForError("登陆失败！该电话号码未注册！");
