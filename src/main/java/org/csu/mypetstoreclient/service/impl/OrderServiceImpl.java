@@ -1,7 +1,7 @@
 package org.csu.mypetstoreclient.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.csu.mypetstoreclient.vo.ItemDetailsVO;
+import org.csu.mypetstoreclient.service.CatalogService;
 import org.csu.mypetstoreclient.vo.LineItemVO;
 import org.csu.mypetstoreclient.vo.OrderVO;
 import org.csu.mypetstoreclient.common.CommonResponse;
@@ -35,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
     private InventoryMapper inventoryMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CatalogService catalogService;
 
     @Override
     public CommonResponse<OrderVO> insertOrder(OrderVO orderVO) {
@@ -123,29 +125,30 @@ public class OrderServiceImpl implements OrderService {
         Orders orders = orderMapper.selectById(Id);
         System.out.println("orders" + orders);
 
-        LineItem lineItem = lineItemMapper.selectById(Id);
-        System.out.println("lineitem" + lineItem);
-
-        Item item = itemMapper.selectById(lineItem.getItemId());
-        System.out.println("item" + item);
-
-        Product product = productMapper.selectById(item.getProductId());
-        System.out.println("product" + product);
-
         if (orders == null) {
             return CommonResponse.createForError("获取失败");
         }
 
-        OrderVO OrderVO = entityToVO(orders, lineItem, item, product);
+        QueryWrapper<LineItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("orderid", Id);
+        List<LineItem> lineItemList = lineItemMapper.selectList(queryWrapper);
+        System.out.println("lineitem" + lineItemList);
+
+        List<LineItemVO> lineItemVOList = new ArrayList<>();
+
+        for (int i=0; i<lineItemList.size(); i++){
+            lineItemVOList.add(lineItemToLineItemVO(lineItemList.get(i)));
+        }
+
+        OrderStatus orderStatus = orderStatusMapper.selectById(Id);
+
+        OrderVO OrderVO = entityToVO(orders, lineItemVOList, orderStatus);
         return CommonResponse.createForSuccess(OrderVO);
     }
 
     @Override
     public CommonResponse<OrderVO> getOrderByOrderId(int orderId) {
-        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("orderid", orderId);
-
-        Orders orders = orderMapper.selectOne(queryWrapper);
+        Orders orders = orderMapper.selectById(orderId);
         if (orders == null) {
             return CommonResponse.createForError("获取失败");
         }
@@ -154,16 +157,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public CommonResponse<OrderVO> getOrdersByUsername(String username) {
+    public CommonResponse<List<OrderVO>> getOrdersByUsername(String username) {
         QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", username);
 
-        Orders orders = orderMapper.selectOne(queryWrapper);
-        if (orders == null) {
-            return CommonResponse.createForError("获取失败");
-        }
+        List<OrderVO> orderVOList = new ArrayList<>();
 
-        return getOrderById(orders.getOrderId());
+        List<Orders> ordersList = orderMapper.selectList(queryWrapper);
+        if (ordersList == null) {
+            return CommonResponse.createForError("该用户没有订单");
+        }
+        for (int i=0; i<ordersList.size(); i++){
+            orderVOList.add(getOrderByOrderId(ordersList.get(i).getOrderId()).getData());
+        }
+        return  CommonResponse.createForSuccess(orderVOList);
+
+
+
     }
 
     //获得当前订单编号
@@ -176,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
-    private OrderVO entityToVO(Orders order, LineItem lineItem, Item item, Product product) {
+    private OrderVO entityToVO(Orders order, List<LineItemVO> lineItemVOList, OrderStatus orderStatus) {
         OrderVO OrderVO = new OrderVO();
         OrderVO.setOrderId(order.getOrderId());
         OrderVO.setUsername(order.getUsername());
@@ -201,40 +211,26 @@ public class OrderServiceImpl implements OrderService {
         OrderVO.setShipToLastName(order.getShipToLastName());
         OrderVO.setCreditCard(order.getCreditCard());
         OrderVO.setLocale(order.getLocale());
-        List<LineItemVO> lineItemVOS = new ArrayList<>();
+        OrderVO.setExpiryDate(order.getExpiryDate());
+        OrderVO.setCardType(order.getCardType());
 
-        while (lineItemMapper.selectById(order.getOrderId()) != null) {
-            LineItemVO lineItemVO = new LineItemVO();
-            lineItemVO.setOrderId(lineItem.getOrderId());
-            lineItemVO.setLineNumber(lineItem.getLineNumber());
-            lineItemVO.setItemId(lineItem.getItemId());
-            lineItemVO.setQuantity(lineItem.getQuantity());
-            lineItemVO.setUnitPrice(lineItem.getUnitPrice());
+        OrderVO.setLineItems(lineItemVOList);
+        OrderVO.setStatus(orderStatus.getStatus());
+        return  OrderVO;
+    }
 
-            int quantity = lineItem.getQuantity();
-            int unitPrice = lineItem.getUnitPrice().intValue();
-            lineItemVO.setTotal(BigDecimal.valueOf(quantity * unitPrice));
+    private LineItemVO lineItemToLineItemVO(LineItem lineItem){
+        LineItemVO lineItemVO = new LineItemVO();
+        lineItemVO.setItemId(lineItem.getItemId());
+        lineItemVO.setLineNumber(lineItem.getLineNumber());
+        lineItemVO.setQuantity(lineItem.getQuantity());
+        lineItemVO.setUnitPrice(lineItem.getUnitPrice());
 
-            ItemDetailsVO itemDetailsVO = new ItemDetailsVO();
-            itemDetailsVO.setItemId(item.getItemId());
-            itemDetailsVO.setProductId(item.getProductId());
-            itemDetailsVO.setListPrice(item.getListPrice());
-            itemDetailsVO.setUnitCost(item.getUnitCost());
-            itemDetailsVO.setSupplierId(item.getSupplierId());
-            itemDetailsVO.setStatus(item.getStatus());
-            itemDetailsVO.setAttribute1(item.getAttribute1());
-            itemDetailsVO.setAttribute2(item.getAttribute2());
-            itemDetailsVO.setAttribute3(item.getAttribute3());
-            itemDetailsVO.setAttribute4(item.getAttribute4());
-            itemDetailsVO.setAttribute5(item.getAttribute5());
-            itemDetailsVO.setQuantity(10000);
-            itemDetailsVO.setProduct(product);
-            lineItemVO.setItem(itemDetailsVO);
-            lineItemVOS.add(lineItemVO);
+        BigDecimal num = new BigDecimal(lineItem.getQuantity());
+        lineItemVO.setTotal(num.multiply(lineItem.getUnitPrice()));
 
-        }
-
-        OrderVO.setLineItems(lineItemVOS);
-        return OrderVO;
+        lineItemVO.setOrderId(lineItem.getOrderId());
+        lineItemVO.setItem(catalogService.getItem(lineItem.getItemId()).getData());
+        return lineItemVO;
     }
 }

@@ -3,6 +3,8 @@ package org.csu.mypetstoreclient.service;
 import org.csu.mypetstoreclient.common.CommonResponse;
 import org.csu.mypetstoreclient.vo.OrderVO;
 
+import java.util.List;
+
 public interface OrderService {
 
     CommonResponse<OrderVO> insertOrder(OrderVO orderVO);
@@ -11,6 +13,6 @@ public interface OrderService {
 
     CommonResponse<OrderVO>  getOrderByOrderId(int orderId);
 
-    CommonResponse<OrderVO> getOrdersByUsername(String username);
+    CommonResponse<List<OrderVO>> getOrdersByUsername(String username);
 
 }

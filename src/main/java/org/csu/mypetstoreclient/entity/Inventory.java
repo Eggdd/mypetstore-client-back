@@ -10,7 +10,7 @@ import lombok.Data;
 @TableName("inventory")
 public class Inventory {
     @TableId(value = "itemid", type = IdType.INPUT)
-    private int itemId;
+    private String itemId;
     @TableField(value = "qty")
     private int quantity;
 }

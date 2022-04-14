@@ -11,6 +11,7 @@ import org.csu.mypetstoreclient.vo.ItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

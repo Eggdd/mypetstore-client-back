@@ -14,13 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-@RequestMapping("/orders/")
 public class OrderController {
 
     @Autowired
@@ -28,95 +24,8 @@ public class OrderController {
     @Autowired
     private SequenceMapper sequenceMapper;
 
-//    @PostMapping("")
-//    @ResponseBody
-//    public CommonResponse<OrderVO> insertOrder(
-//            @RequestParam String username,
-//            @RequestParam String orderDate,
-//            @RequestParam String shipAddress1,
-//            @RequestParam String shipAddress2,
-//            @RequestParam String shipCity,
-//            @RequestParam String shipState,
-//            @RequestParam String shipZip,
-//            @RequestParam String shipCountry,
-//            @RequestParam String billAddress1,
-//            @RequestParam String billAddress2,
-//            @RequestParam String billCity,
-//            @RequestParam String billState,
-//            @RequestParam String billZip,
-//            @RequestParam String billCountry,
-//            @RequestParam String courier,
-//            @RequestParam String totalPrice,
-//            @RequestParam String billToFirstName,
-//            @RequestParam String billToLastName,
-//            @RequestParam String shipToFirstName,
-//            @RequestParam String shipToLastName,
-//            @RequestParam String creditCard,
-//            @RequestParam String expiryDate,
-//            @RequestParam String cardType,
-//            @RequestParam String locale,
-//            @RequestParam (value = "lineItem",required = false)List<String> lineItem,
-//            HttpSession session) throws ParseException {
-//
-//        OrderVO OrderVO = new OrderVO();
-//        Sequence sequence = sequenceMapper.selectById("ordernum");
-//        int orderId = sequence.getNextId();
-//        sequence.setNextId(orderId+1);
-//        //更新sequence中的nextId
-//        sequenceMapper.updateById(sequence);
-//
-//        OrderVO.setOrderId(orderId);
-//        OrderVO.setUsername(username);
-//
-////        //转换
-////        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-////        String time = sdf.format(orderDate);
-////        Date orderdate = sdf.parse(time);
-////        OrderVO.setOrderDate(orderdate);
-//        System.out.println(orderDate);
-//        //设置下单时间
-//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-//        OrderVO.setOrderDate(timestamp);
-//        OrderVO.setShipAddress1(shipAddress1);
-//        OrderVO.setShipAddress2(shipAddress2);
-//        OrderVO.setShipCity(shipCity);
-//        OrderVO.setShipState(shipState);
-//        OrderVO.setShipZip(shipZip);
-//        OrderVO.setShipCountry(shipCountry);
-//        OrderVO.setBillAddress1(billAddress1);
-//        OrderVO.setBillAddress2(billAddress2);
-//        OrderVO.setBillCity(billCity);
-//        OrderVO.setBillState(billState);
-//        OrderVO.setBillZip(billZip);
-//        OrderVO.setBillCountry(billCountry);
-//        OrderVO.setCourier(courier);
-//
-//        BigDecimal totalprice = new BigDecimal(totalPrice);
-//        OrderVO.setTotalPrice(totalprice);
-//
-//        OrderVO.setBillToFirstName(billToFirstName);
-//        OrderVO.setBillToLastName(billToLastName);
-//        OrderVO.setShipToFirstName(shipToFirstName);
-//        OrderVO.setShipToLastName(shipToLastName);
-//        OrderVO.setCreditCard(creditCard);
-//        OrderVO.setExpiryDate(expiryDate);
-//        OrderVO.setCardType(cardType);
-//        OrderVO.setLocale(locale);
-//
-//        List<LineItem> lineItems = OrderVO.getLineItems();
-//        lineItems.add((LineItem) lineItem);
-//        OrderVO.setLineItems(lineItems);
-//
-//        CommonResponse<OrderVO> response = orderService.insertOrder(OrderVO);
-//        if(response.isSuccess()){
-//            session.setAttribute("insertOrder",response.getData());
-//        }
-//        return response;
-//
-//    }
-
     //增加订单
-    @PostMapping("")
+    @PostMapping("/orders")
     @ResponseBody
     public CommonResponse<OrderVO> insertOrder(@RequestBody Map<String, Object> map, HttpSession session) throws ParseException {
 
@@ -211,7 +120,7 @@ public class OrderController {
     }
 
     //根据订单id获得订单
-    @GetMapping("{id}")
+    @GetMapping("/orders/{id}")
     @ResponseBody
     public CommonResponse<OrderVO> getOrderByOrderId(@PathVariable("id") int id,HttpSession session) {
         CommonResponse<OrderVO> response = orderService.getOrderByOrderId(id);
@@ -219,6 +128,12 @@ public class OrderController {
             session.setAttribute("getOrderByOrderId",response.getData());
         }
         return response;
+    }
+
+    @GetMapping("/accounts/{username}/orders")
+    @ResponseBody
+    public CommonResponse<List<OrderVO>> getOrderByUserName(@PathVariable("username")String username){
+        return orderService.getOrdersByUsername(username);
     }
 
 }

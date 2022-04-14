@@ -1,6 +1,7 @@
 package org.csu.mypetstoreclient.vo;
 
 import lombok.Data;
+import org.csu.mypetstoreclient.entity.Item;
 
 import java.math.BigDecimal;
 
@@ -11,6 +12,6 @@ public class LineItemVO {
     private String itemId;
     private int quantity;
     private BigDecimal unitPrice; // item的listPrice
-    private ItemDetailsVO item;
+    private ItemVO item;
     private BigDecimal total; // quantity*unitPrice
 }

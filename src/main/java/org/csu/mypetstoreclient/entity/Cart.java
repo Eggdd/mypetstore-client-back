@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+@Validated
 @Data
-@TableName("item")
+@TableName("cart")
 public class Cart {
 
     @TableId(type = IdType.INPUT)
@@ -23,7 +26,7 @@ public class Cart {
     @TableField(value = "itemid")
     private String itemId;
 
-    @Min(value = 1, message = "购物车所存放商品不能为负数")
     @TableField(value = "itemnum")
+    @Min(value = 1, message = "购物车所存放商品不能为负数")
     private int itemNum;
 }

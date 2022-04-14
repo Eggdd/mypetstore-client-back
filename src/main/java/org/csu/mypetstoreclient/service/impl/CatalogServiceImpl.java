@@ -138,9 +138,6 @@ public class CatalogServiceImpl implements CatalogService {
         itemVO.setAttribute4(item.getAttribute4());
 
         itemVO.setProduct(product);
-        /*itemVO.setCategoryId(product.getCategoryId());
-        itemVO.setName(product.getName());
-        itemVO.setDescription(product.getDescription());*/
 
         Inventory itemInventory = inventoryMapper.selectById(item.getItemId());
         itemVO.setQuantity(itemInventory.getQuantity());
@@ -150,13 +147,6 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public CommonResponse<ItemVO> getItem(String itemId) {
-        /*Item item = itemMapper.selectById(itemId);
-
-        if (item == null){
-            return CommonResponse.createForError("没有该item的信息");
-        }
-
-        return CommonResponse.createForSuccess(item);*/
 
         Item item = itemMapper.selectById(itemId);
 

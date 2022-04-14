@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@TableName("order")
+@TableName("orders")
 public class Orders {
 
     @TableId(value = "orderid" , type = IdType.INPUT)

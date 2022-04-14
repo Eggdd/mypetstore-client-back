@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -31,9 +32,8 @@ public class CartController {
     @ResponseBody
     public CommonResponse updateCart(
             @PathVariable("username") String username,
-            @RequestParam String itemId,
-            @RequestParam int num,
-            HttpSession session){
+            @RequestParam("itemId") String itemId,
+            @Valid @RequestParam("quantity") int num){
         return cartService.updateCart(username,itemId,num);
     }
 
@@ -49,8 +49,7 @@ public class CartController {
     @ResponseBody
     public CommonResponse removeItemByItemId(
             @PathVariable("username") String username,
-            @PathVariable("itemId") String itemId,
-            HttpSession session){
+            @PathVariable("itemId") String itemId){
         return cartService.removeItemByItemId(username,itemId);
     }
 }

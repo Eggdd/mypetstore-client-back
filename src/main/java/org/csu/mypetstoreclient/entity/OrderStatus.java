@@ -15,7 +15,7 @@ public class OrderStatus {
     @TableId(value = "orderid" , type = IdType.INPUT)
     private int orderId;
 
-    @TableId(value = "linenum")
+    @TableField(value = "linenum")
     private int lineNum;
 
     @TableField(value = "timestamp")
