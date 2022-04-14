@@ -15,7 +15,7 @@ public class LineItem {
     @TableId(value = "orderid" , type = IdType.INPUT)
     private int orderId;
 
-    @TableId(value = "linenum")
+    @TableField(value = "linenum")
     private int lineNumber;
 
     private int quantity;

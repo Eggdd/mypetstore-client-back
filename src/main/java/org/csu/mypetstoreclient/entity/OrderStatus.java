@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @TableName("orderstatus")
 public class OrderStatus {
@@ -17,7 +19,7 @@ public class OrderStatus {
     private int lineNum;
 
     @TableField(value = "timestamp")
-    private Data timeStamp;
+    private Date timeStamp;
 
     private String status;
 }
