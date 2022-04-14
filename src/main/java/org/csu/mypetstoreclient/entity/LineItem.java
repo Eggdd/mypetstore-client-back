@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
 @Data
@@ -18,6 +19,7 @@ public class LineItem {
     @TableField(value = "linenum")
     private int lineNumber;
 
+    @Min(value = 1, message = "订单所购买商品数不能小于1")
     private int quantity;
 
     @TableField(value = "itemid")

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/accounts/")
@@ -25,9 +26,9 @@ public class AccountController {
     @ResponseBody
     public CommonResponse<AccountVO> loginByUsername(
             @RequestParam String username,
-            @RequestParam String passwprd,
+            @RequestParam String password,
             HttpSession session) {
-        CommonResponse<AccountVO> response = accountService.getAccountByUsernameAndPassword(username, passwprd);
+        CommonResponse<AccountVO> response = accountService.getAccountByUsernameAndPassword(username, password);
         if (response.isSuccess()) {
             session.setAttribute("account", response.getData());
         }
@@ -51,12 +52,12 @@ public class AccountController {
     @PostMapping("register")
     @ResponseBody
     public CommonResponse<AccountVO> register(
-            @RequestParam String username,
-            @RequestParam String passwprd,
+            @Valid @RequestParam String username,
+            @RequestParam String password,
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String email,
-            @RequestParam String phone,
+            @Valid @RequestParam String phone,
             @RequestParam String address1,
             @RequestParam String address2,
             @RequestParam String city,
@@ -66,12 +67,11 @@ public class AccountController {
             @RequestParam String favouriteCategoryId,
             @RequestParam String languagePreference,
             @RequestParam boolean listOption,
-            @RequestParam boolean bannerOption,
-            HttpSession session) {
+            @RequestParam boolean bannerOption) {
 
         AccountVO accountVO = new AccountVO();
         accountVO.setUsername(username);
-        accountVO.setPassword(passwprd);
+        accountVO.setPassword(password);
         accountVO.setEmail(email);
         accountVO.setFirstName(firstName);
         accountVO.setLastName(lastName);
@@ -104,11 +104,10 @@ public class AccountController {
         if (accountService.getAccountByPhone(accountVO.getPhone()).isSuccess()) {
             return CommonResponse.createForError("注册失败！该手机号已被注册！");
         }
+
         CommonResponse<AccountVO> response = accountService.insertAccount(accountVO);
-        if (response.isSuccess()) {
-            session.setAttribute("register_account", response.getData());
-        }
-        return response;
+
+        return CommonResponse.createForSuccessMessage("注册成功");
     }
 
     @GetMapping("{username}")

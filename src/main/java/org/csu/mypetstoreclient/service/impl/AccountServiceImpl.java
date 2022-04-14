@@ -35,13 +35,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CommonResponse<AccountVO> getAccountByUsername(String username) {
         Account account = accountMapper.selectById(username);
-        Profile profile = profileMapper.selectById(username);
-        BannerData bannerdata = bannerDataMapper.selectById(profile.getFavouriteCategoryId());
         if(account == null){
             return CommonResponse.createForError("用户不存在");
         }
+        Profile profile = profileMapper.selectById(username);
+        BannerData bannerdata = bannerDataMapper.selectById(profile.getFavouriteCategoryId());
         AccountVO accountVO = entityToVO(account, profile, bannerdata);
-        return CommonResponse.createForSuccess("用户存在",accountVO);
+        return CommonResponse.createForSuccess(accountVO);
     }
 
     @Override
