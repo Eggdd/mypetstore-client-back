@@ -76,66 +76,10 @@ public class CartServiceImpl implements CartService{
         }else{
             return CommonResponse.createForError("购物车更新失败");
         }
-//        Item item = itemMapper.selectById(itemId);
-//
-//        String productId = item.getProductId();
-//        Product product = productMapper.selectById(productId);
-//
-//        ItemVO itemVO = itemToItemVO(item,product);
-
-//        QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("userid",username);
-//        List<Cart> cartList = cartMapper.selectList(queryWrapper);
-
-
-//        List<CartVO> cartVOList = cartToCartVO(username);
-//
-//        int flag = 0;
-//        for (int i = 0;i < cartVOList.size();i++){
-//            CartVO cartVO = cartVOList.get(i);
-//
-//            if (cartVO.getItem().getItemId() == itemId){
-//                cartVO.setQuantity(num);
-//                cartVO.setInStock(true);
-//
-//                int number = cartVO.getQuantity();
-//                double listPrice = item.getListPrice().doubleValue();
-//                double total = 0;
-//                for (int j = 1;j <= number;j++ ){
-//                    total = total + listPrice;
-//                }
-//                cartVO.setTotal(BigDecimal.valueOf(total));
-//                flag = 1;
-//                break;
-//            }
-//        }
-//
-//        if (flag == 0){
-//            CartVO cartVO = new CartVO();
-//            cartVO.setItem(itemVO);
-//            cartVO.setQuantity(num);
-//            cartVO.setInStock(true);
-//            int number = cartVO.getQuantity();
-//            double listPrice = item.getListPrice().doubleValue();
-//            double total = 0;
-//            for (int j = 1;j <= number;j++ ){
-//                total = total + listPrice;
-//            }
-//            cartVO.setTotal(BigDecimal.valueOf(total));
-//            cartVOList.add(cartVO);
-//        }
-
-//        return CommonResponse.createForSuccessMessage("购物车更新成功");
     }
 
     @Override
     public CommonResponse<List<CartVO>> getCartByAccount(String username) {
-
-        /*Cart cart = cartMapper.selectById(username);
-
-        if (cart == null){
-            return CommonResponse.createForError("该Account的购物车为空");
-        }*/
 
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid",username);
@@ -214,32 +158,6 @@ public class CartServiceImpl implements CartService{
             return CommonResponse.createForSuccessMessage("删除成功");
         }
 
-        /*QueryWrapper<Account> accountQueryWrapper = new QueryWrapper<>();
-        accountQueryWrapper.eq("userid",username);
-        Account account = accountMapper.selectOne(accountQueryWrapper);
-
-        QueryWrapper<Cart> cartQueryWrapper = new QueryWrapper<>();
-        cartQueryWrapper.eq("userid",username);
-        List<Cart> cartList = cartMapper.selectList(cartQueryWrapper);
-
-        Item item = itemMapper.selectById(itemId);
-
-        String productId = item.getProductId();
-        Product product = productMapper.selectById(productId);
-
-        ItemVO itemVO = itemToItemVO(item,product);
-
-        CartVO cartVO = new CartVO();
-        cartVO.setItem(itemVO);
-        cartVO.setQuantity(quantity);
-        cartVO.setInStock(true);
-        cartVO.setTotal(total);
-
-        List<CartVO> cartVOList = cartToCartVO(username);
-
-        cartVOList.remove(itemVO);
-
-        return CommonResponse.createForSuccessMessage("删除成功");*/
     }
 
     private ItemVO itemToItemVO(Item item,Product product){
@@ -256,9 +174,6 @@ public class CartServiceImpl implements CartService{
         itemVO.setAttribute3(item.getAttribute3());
         itemVO.setAttribute4(item.getAttribute4());
         itemVO.setProduct(product);
-        /*itemVO.setCategoryId(product.getCategoryId());
-        itemVO.setName(product.getName());
-        itemVO.setDescription(product.getDescription());*/
 
         Inventory itemInventory = inventoryMapper.selectById(item.getItemId());
         itemVO.setQuantity(itemInventory.getQuantity());
