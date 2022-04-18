@@ -109,13 +109,14 @@ public class AccountServiceImpl implements AccountService {
             bannerdata.setBannerName("");
         }
 
+        if(accountMapper.selectById(accountVO.getUsername()) != null){
+            return CommonResponse.createForError("注册失败！用户名已存在");
+        }
+
         accountMapper.insert(account);
         signOnMapper.insert(signOn);
         profileMapper.insert(profile);
 
-        if(accountMapper.selectById(accountVO.getUsername()) != null){
-            return CommonResponse.createForError("注册失败！用户名已存在");
-        }
         return CommonResponse.createForSuccess("注册成功！",accountVO);
     }
 

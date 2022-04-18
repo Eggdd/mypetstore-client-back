@@ -136,9 +136,69 @@ public class AccountController {
         return accountService.modifyPwdByPhone(phone, password);
     }
 
+    @PutMapping("{username}")
+    @ResponseBody
+    public CommonResponse<AccountVO> updateAccount(
+            @Valid@PathVariable("username")String username,
+            @RequestParam String password,
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String email,
+            @Valid @RequestParam String phone,
+            @RequestParam String address1,
+            @RequestParam String address2,
+            @RequestParam String city,
+            @RequestParam String state,
+            @RequestParam String zip,
+            @RequestParam String country,
+            @RequestParam String favouriteCategoryId,
+            @RequestParam String languagePreference,
+            @RequestParam boolean listOption,
+            @RequestParam boolean bannerOption) {
+
+        AccountVO accountVO = new AccountVO();
+        accountVO.setUsername(username);
+        accountVO.setPassword(password);
+        accountVO.setEmail(email);
+        accountVO.setFirstName(firstName);
+        accountVO.setLastName(lastName);
+        accountVO.setStatus("OK");
+        accountVO.setAddress1(address1);
+        accountVO.setAddress2(address2);
+        accountVO.setCity(city);
+        accountVO.setState(state);
+        accountVO.setCountry(country);
+        accountVO.setZip(zip);
+        accountVO.setPhone(phone);
+
+        accountVO.setLanguagePreference(languagePreference);
+        accountVO.setBannerOption(bannerOption);
+        accountVO.setListOption(listOption);
+        if (bannerOption) {
+            accountVO.setFavouriteCategoryId(favouriteCategoryId);
+
+            QueryWrapper<BannerData> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("favcategory", favouriteCategoryId);
+            BannerData bannerdata = bannerDataMapper.selectOne(queryWrapper);
+            accountVO.setBannerName(bannerdata.getBannerName());
+
+        } else {
+            accountVO.setFavouriteCategoryId("");
+            accountVO.setBannerName("");
+        }
+
+        CommonResponse<AccountVO> response = accountService.updateAccount(accountVO);
+
+        return response;
+    }
+
+
     @PutMapping("{username}/changePhone")
     @ResponseBody
     public CommonResponse changePhone(@PathVariable("username")String username, @RequestParam("phone") String phone){
+        if (accountService.getAccountByPhone(phone).isSuccess()) {
+            return CommonResponse.createForError("更改失败！该手机号已被注册！");
+        }
         return accountService.changePhone(username, phone);
     }
 }

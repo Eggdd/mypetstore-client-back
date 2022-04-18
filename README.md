@@ -266,11 +266,11 @@
          }  
    ```
    
-8.  根据id获得单个item
+8.  根据itemId获得单个item
 
    method: get
 
-   url:/catalog/items/{id}   如/catalog/items/K9-RT-01
+   url:/catalog/items/{id}   如/catalog/items/EST-11
 
    parameters: 无
 

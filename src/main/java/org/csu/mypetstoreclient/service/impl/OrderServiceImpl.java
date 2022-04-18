@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         orderStatus.setOrderId(orderId);
         orderStatus.setTimeStamp(orderVO.getOrderDate());
         orderStatus.setLineNum(1);
-        orderStatus.setStatus("undelivered");
+        orderStatus.setStatus("ok");
         orderStatusMapper.insert(orderStatus);
 
         //获取lineitem数据库信息
